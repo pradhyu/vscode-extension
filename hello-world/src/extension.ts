@@ -18,10 +18,22 @@ export function activate(context: vscode.ExtensionContext) {
 
 		// Display a message box to the user
 		vscode.window.showInformationMessage('Hello World from hello-world!');
-	});
+		var setting: vscode.Uri = vscode.Uri.parse("untitled:" + "~/summary.txt");
+		vscode.workspace.openTextDocument(setting).then((a: vscode.TextDocument) => {
+			vscode.window.showTextDocument(a, 1, false).then(e => {
+				e.edit(edit => {
+					edit.insert(new vscode.Position(0, 0), "Your advertisement here");
+				});
+			});
+		}, (error: any) => {
+			console.error(error);
+			debugger;
+		});
 
-	context.subscriptions.push(disposable);
+});
+
+context.subscriptions.push(disposable);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
